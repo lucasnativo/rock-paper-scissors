@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Rock Paper Scissors</title>
+</head>
+<body>
+	<script>
+		let round = 0
+		let humanScore = 0
+		let computerScore = 0
+
+		function computerPlay() {
+			const selections = ["rock", "paper", "scissors"];
+			const randomSelections = selections[Math.floor(Math.random()*selections.length)];
+			return randomSelections;
+		}
+
+		function playRound(playerSelection, computerSelection) {
+			if (playerSelection === computerSelection) {
+				return "Draw!";
+			} else if (playerSelection === "rock") {
+				return computerSelection === "scissors" ? "You Win! Rock beats scissors." : "You Lose! Paper beats rock.";
+			} else if (playerSelection === "paper") {
+				return computerSelection === "rock" ? "You Win! Paper beats rock." : "You Lose! Scissors beats paper.";
+			} return computerSelection === "paper" ? "You Win! Scissors beats paper." : "You Lose! Rock beats scissors.";
+		}
+		
+		function game() {
+			for (var i = 0; i < 5; i++) {
+				round++
+				const playerSelection = prompt("sua jogada")
+				const computerSelection = computerPlay()
+				let play = playRound(playerSelection, computerSelection)
+				console.log("Round = " + round)
+				console.log("human = " + playerSelection)
+				console.log("computer = " + computerSelection)
+
+				if (play.charAt(4) === "W") {
+					humanScore++;
+					console.log("human score = " + humanScore)
+					console.log("computer score = " + computerScore)
+				} else if (play.charAt(4) === "L"){
+					computerScore++;
+					console.log("human score = " + humanScore)
+					console.log("computer score = " + computerScore)
+				} else {
+					console.log("human score = " + humanScore)
+					console.log("computer score = " + computerScore)				
+				}
+			}
+			if (humanScore === computerScore) {
+				return "Draw! - Human: " + humanScore + " Computer: " + computerScore			
+			} else if (humanScore > computerScore) {
+				return "You Won! - Human: " + humanScore + " Computer: " + computerScore
+			} return "You Loss! - Human: " + humanScore + " Computer: " + computerScore
+		}
+
+		// const playerEntry = prompt("sua jogada")
+		// const playerSelection = playerEntry.toLowerCase()
+		// const computerSelection = computerPlay()
+		console.log(game())
+	</script>
+
+</body>
+</html>
