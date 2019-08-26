@@ -1,13 +1,55 @@
 <!DOCTYPE html>
 <html>
+		<link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
 <head>
 	<title>Rock Paper Scissors</title>
+	<link rel="stylesheet" href="style.css">
 </head>
 <body>
+	<div id='frame' class='frame'>
+		<div id='displayHome' class='display-home'></div>
+		<div id='score' class='display-score'>
+			<div class='score-box' >
+				<div id='c-score'class='cup-score'> </div>
+				<div id='p-score' class='player-score'></div>
+			</div>
+		</div>
+		<div id='display' class='display-selection'>
+			<div id='display-box'class='display-box'>
+				<div id='computerSelection' class="computer-selection"></div>
+			</div>
+		</div>
+		<div id='set-box' class='set-box'>
+			<div id='start-btn' class='start-btn'>Start</div>
+		</div>
+		<div id='player-btns' class='p-btns'>
+			<div id='rock' class='btns'><img id='rock' src='images/rock-t.png'></div>
+			<div id='scissors'class='btns'><img id='scissors' src='images/scissors-t.png'></div>
+			<div id='paper'class='btns'><img id='paper' src='images/paper-t.png'></div>
+		</div>
+	</div>
+
+
+
 	<script>
-		let round = 0
-		let humanScore = 0
-		let computerScore = 0
+		var humanScore = 0;
+		var computerScore = 0;
+		var round = 0;
+		var maxRound = 5;
+
+		const displayHometext = document.querySelector('#displayHome').textContent = '\r\nThe Odin Project \r\n \r\n \r\n   Rock   Paper \r\n\r\n     Scissors \r\n\r\n\r\n        by \r\n\r\n\r\n  Lucas Sampaio';
+		const playerSelect = document.querySelectorAll('#player-btns .btns');
+		const start = document.querySelector('#set-box #start-btn');
+		const computerBtn = document.querySelector('#display #display-box #computerSelection');
+		const gameoverDiv = document.createElement('div');
+		var gameoverBox = document.querySelector('#display #display-box');
+		const homeDisplayframe = document.getElementById('displayHome');
+		const homeDisplayscore = document.getElementsByClassName('display-score')[0];
+		const homeDisplayselection = document.getElementsByClassName('display-selection')[0];
+		homeDisplayscore.style.cssText = 'display: none;';
+		homeDisplayselection.style.cssText = 'display: none;';
+		
+		start.addEventListener('click', startGame);
 
 		function computerPlay() {
 			const selections = ["rock", "paper", "scissors"];
@@ -15,7 +57,7 @@
 			return randomSelections;
 		}
 
-		function playRound(playerSelection, computerSelection) {
+		function compareSelection(playerSelection, computerSelection) {
 			if (playerSelection === computerSelection) {
 				return "Draw!";
 			} else if (playerSelection === "rock") {
@@ -23,43 +65,102 @@
 			} else if (playerSelection === "paper") {
 				return computerSelection === "rock" ? "You Win! Paper beats rock." : "You Lose! Scissors beats paper.";
 			} return computerSelection === "paper" ? "You Win! Scissors beats paper." : "You Lose! Rock beats scissors.";
-		}
-		
-		function game() {
-			for (var i = 0; i < 5; i++) {
-				round++
-				const playerSelection = prompt("sua jogada")
-				const computerSelection = computerPlay()
-				let play = playRound(playerSelection, computerSelection)
-				console.log("Round = " + round)
-				console.log("human = " + playerSelection)
-				console.log("computer = " + computerSelection)
+        }
 
-				if (play.charAt(4) === "W") {
-					humanScore++;
-					console.log("human score = " + humanScore)
-					console.log("computer score = " + computerScore)
-				} else if (play.charAt(4) === "L"){
-					computerScore++;
-					console.log("human score = " + humanScore)
-					console.log("computer score = " + computerScore)
-				} else {
-					console.log("human score = " + humanScore)
-					console.log("computer score = " + computerScore)				
+		function computerSelectionImage(computerSelection) {
+			if ( computerSelection === 'rock' ) {
+				return computerSelection === 'rock' ? computerBtn.classList.add('rock') : computerBtn.classList.remove('paper', 'scissors');
+			} else if ( computerSelection === 'scissors') {
+				return computerSelection === 'scissors' ? computerBtn.classList.add('scissors') : computerBtn.classList.remove('paper', 'rock');
+			} else {
+				return computerSelection === 'paper' ? computerBtn.classList.add('paper') : computerBtn.classList.remove('rock', 'scissors');
+			}
+		}
+
+		function endGamedisplay() {
+			if (arguments[0] === 'human'){
+				gameoverDiv.textContent = '  You Win! \r\n \r\n  Press Start \r\n \r\n to \r\n \r\n continue';
+				gameoverBox.replaceChild(gameoverDiv, computerBtn);
+				displayScore();
+			}
+
+			if (arguments[0] === 'computer') {
+				gameoverDiv.textContent = '  You Lose! \r\n \r\n  Press Start \r\n \r\n to \r\n \r\n continue';
+				gameoverBox.replaceChild(gameoverDiv, computerBtn);
+				displayScore();
+			}
+		}
+
+		function displayScore() {
+			document.querySelector('#p-score').textContent = 'H: ' + humanScore;
+			document.querySelector('#c-score').textContent = 'C: ' + computerScore;
+		}
+
+		function startGame() {
+			humanScore = 0;
+			computerScore = 0;
+			displayScore();
+			homeDisplayframe.style.cssText = 'display: none';
+			homeDisplayscore.style.cssText = 'display: flex;';
+			homeDisplayselection.style.cssText = 'display: flex;';
+			if (gameoverBox.contains(gameoverDiv)){
+				gameoverBox.replaceChild(computerBtn, gameoverDiv);
+			};
+			playerSelect.forEach(btn => btn.addEventListener('click', playRound));
+			playerSelect.forEach(btn => btn.addEventListener('transitionend', removeTransition));
+		}
+
+		function endGame() {
+			playerSelect.forEach(btn => btn.removeEventListener('click', playRound));
+		}
+
+		function playRound(e) {
+			if(computerBtn.hasChildNodes() && round === 0) {
+			computerBtn.textContent = '';
+			humanScore = 0;
+			computerScore = 0;
+			}
+
+			const playerBtn = document.querySelector(`#player-btns #${e.target.id}`);
+			playerBtn.classList.add('playing');
+			const playerSelection = e.target.id;
+			const computerSelection = computerPlay();
+
+			computerSelectionImage(computerSelection);
+
+
+			setTimeout(function() {
+			computerBtn.classList.remove('rock', 'scissors', 'paper');
+			}, 500);
+
+			let play = compareSelection(playerSelection, computerSelection);
+			round++;
+
+			if (play.charAt(4) === "W") {
+				humanScore++;
+				displayScore();
+				if (humanScore === maxRound) {
+					endGamedisplay('human');
+					round = 0;
+					endGame();
+				}
+			} else if (play.charAt(4) === "L"){
+				computerScore++;
+				displayScore();
+				if (computerScore === maxRound) {
+					endGamedisplay('computer')
+					round = 0;
+					endGame();
 				}
 			}
-			if (humanScore === computerScore) {
-				return "Draw! - Human: " + humanScore + " Computer: " + computerScore			
-			} else if (humanScore > computerScore) {
-				return "You Won! - Human: " + humanScore + " Computer: " + computerScore
-			} return "You Loss! - Human: " + humanScore + " Computer: " + computerScore
 		}
 
-		// const playerEntry = prompt("sua jogada")
-		// const playerSelection = playerEntry.toLowerCase()
-		// const computerSelection = computerPlay()
-		console.log(game())
-	</script>
+		function removeTransition(e) {
+    		if(e.propertyName !== 'transform') return;
+			this.classList.remove('playing');
+  		}
+
+		</script>
 
 </body>
 </html>

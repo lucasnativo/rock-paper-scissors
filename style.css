@@ -1,0 +1,173 @@
+body,html {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    font-family: 'Press Start 2P', cursive;
+    justify-content: center;
+}
+
+.frame {
+    width: 270px;
+    margin-top: 2rem;
+    border: 3px solid black;
+    /* padding-top: 10px; */
+    background-color:  #1a1919;
+}
+
+.p-btns {
+    display: flex;
+    flex: 1;
+    align-items: top;
+    justify-content: center;
+    height: 100px;
+    background-color: #1a1919;
+}
+
+.display-home {
+    width: 250px;
+    height: 205px;
+    border: 2px solid black;
+    background: hsl(0, 1%, 72%);
+    margin-left: 8px;
+    margin-top: 10px;
+    white-space: pre;
+    font-size: 15px;
+}
+
+.display-score {
+    display: flex;
+    flex: 1;
+    min-height: 0vh;
+    align-items: center;
+    justify-content: center;
+}
+
+.display-selection {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+}
+
+.display-box {
+    width: 250px;
+    height: 150px;
+    text-align: center;
+    color: black;
+    background: hsl(0, 1%, 72%);
+    align-items: center;
+    justify-content: center;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
+    white-space: pre;
+}
+
+.set-box {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    background-color:  #1a1919;
+}
+
+.start-btn {
+    padding-top: 8px;
+    width: 125px;
+    height: 25px;
+    text-align: center;
+    justify-content: center;
+    color: white;
+    background-color:  #1a1919;
+    text-shadow: 0 0 .5rem black;
+    border: 2px solid black;
+}
+
+.computer-selection {
+    width: 250px;
+    height: 100px;
+    margin-left: 100px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.box-title {
+    border: 2px solid black;
+}
+
+.btns {
+    transition: all .07s;
+    width: 83.3px;
+    height: 25px;
+    margin-left: 41;
+    text-align: center;
+    color: white;
+    text-shadow: 0 0 .5rem black;
+}
+
+.score-box {
+    margin-top: 10px;
+    padding-top: 5px;
+    display: flex;
+    width: 250px;
+    height: 50px;
+    text-align: center;
+    background: hsl(0, 1%, 72%);
+    text-shadow: 0 0 .5rem black;
+    border-top: 2px solid black;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+}
+
+.p-title {
+    padding-top: 3px;
+    width: 62.5px
+}
+
+.c-title {
+    width: 62.5px;
+    padding-top: 3px;
+}
+
+.cup-score {
+    padding-top: 3px;
+    width:125px;
+    text-align: center;
+}
+
+.player-score {
+    text-align: center;
+    padding-top: 3px;
+    width: 125px;
+}
+
+.playing {
+    transform: scale(1.05);
+}
+
+.rock {
+    background-image: url(images/rock-t-c.png);
+    text-shadow: 0 0 .5rem black;
+    width: 61px;
+    height: 73px;
+}
+
+.paper {
+    background-image: url(images/paper-t-c.png);
+    text-shadow: 0 0 .5rem black;
+    width: 68px;
+    height: 92px;
+}
+
+.scissors {
+    background-image: url(images/scissors-t-c.png);
+    text-shadow: 0 0 .5rem black;
+    width: 69px;
+    height: 93px;
+}
+
+.gameover {
+    margin-left: 0px;
+}
